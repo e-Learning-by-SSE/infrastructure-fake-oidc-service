@@ -6,7 +6,7 @@ pipeline {
       steps {
         configFileProvider(
           [configFile(fileId: "elearn-docker-settings", variable: 'DOCKER_CONFIG')]) {
-          sh "source $DOCKER_CONFIG && export DOCKER_REPO_PATH"
+          sh ". $DOCKER_CONFIG && export DOCKER_REPO_PATH"
           sh "printenv"
         }
         //withMaven(mavenSettingsConfig: 'mvn-elearn-repo-settings') {
