@@ -5,7 +5,7 @@ pipeline {
     stage ('Maven') {
       steps {
         configFileProvider([configFile(fileId: "elearn-docker-settings", variable: 'dockerConfigFile')]) {
-          sh "source $dockerConfigFile && echo $DOCKER_REPO_PATH"
+          sh "source $dockerConfigFile && export DOCKER_REPO_PATH"
         }
         //withMaven(mavenSettingsConfig: 'mvn-elearn-repo-settings') {
         //}
