@@ -1,15 +1,18 @@
 pipeline {
   agent { label 'maven' }
-
   stages {
     stage ('Maven') {
+      environment {
+        DOCKER_TARGET = 'ghcr.io/e-learning-by-sse/infrastructure-fake-oidc'
+      }
       steps {
+        sh 'mvn spring-boot:build-image -Dspring-boot.build-image.imageName=${env.DOCKER_TARGET}'
         script {
-          withMaven(mavenSettingsConfig: 'mvn-elearn-repo-settings') {
-            docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
-              sh 'mvn spring-boot:build-image -Dspring-boot.build-image.imageName=ghcr.io/e-learning-by-sse/infrastructure-fake-oidc:lates -Dspring-boot.build-image.publish=true'
-            }
-          } 
+          image = docker.image(${env.DOCKER_TARGET})
+          docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
+            image.push()
+            image.push('latest)
+          }
         }
       }
     }
