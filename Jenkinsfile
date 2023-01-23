@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage ('Maven') {
       steps {
-        configFileProvider([configFile(fileId: "e-learn-docker-settings", variable: 'dockerConfigFile')]) {
+        configFileProvider([configFile(fileId: "elearn-docker-settings", variable: 'dockerConfigFile')]) {
           sh "source $dockerConfigFile && echo $DOCKER_REPO_PATH"
         }
         //withMaven(mavenSettingsConfig: 'mvn-elearn-repo-settings') {
