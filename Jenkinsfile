@@ -11,7 +11,7 @@ pipeline {
           image = docker.image(${env.DOCKER_TARGET})
           docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
             image.push()
-            image.push('latest)
+            image.push('latest')
           }
         }
       }
