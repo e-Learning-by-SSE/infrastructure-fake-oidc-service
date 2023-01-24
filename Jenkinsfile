@@ -20,7 +20,7 @@ pipeline {
         script {
             version = sh(
                 returnStdout: true,
-                script: 'mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout')
+                script: "mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout")
               .trim()
             image = docker.image("${env.DOCKER_TARGET}")
             docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
