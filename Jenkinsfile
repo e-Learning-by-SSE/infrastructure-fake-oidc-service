@@ -18,7 +18,7 @@ pipeline {
             image = docker.image("${env.DOCKER_TARGET}")
             version = env.API_VERSION = sh(
                 returnStdout: true,
-                script: 'mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec')
+                script: 'mvn -q -Dexec.executable=echo -Dexec.args=\'${project.version}\' --non-recursive exec:exec')
               .trim()
             docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
               image.push("${version}")
