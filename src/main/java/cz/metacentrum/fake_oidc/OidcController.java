@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -154,7 +156,21 @@ public class OidcController {
         }
         Set<String> scopes = setFromSpaceSeparatedString(accessTokenInfo.scope);
         Map<String, Object> m = new LinkedHashMap<>();
-        User user = serverProperties.getUsers().get(accessTokenInfo.sub);
+        Optional<Entry<String, User>> userEntry = serverProperties
+                .getUsers()
+                .entrySet()
+                .stream()
+                .filter(element -> element
+                        .getValue()
+                        .getSub()
+                        .equals(accessTokenInfo.sub))
+                .findFirst();
+        if(userEntry.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("user not found");
+        }
+        
+        User user = userEntry.get().getValue();
+                      
         m.put("sub", user.getSub());
         if (scopes.contains("profile")) {
             m.put("name", user.getName());
