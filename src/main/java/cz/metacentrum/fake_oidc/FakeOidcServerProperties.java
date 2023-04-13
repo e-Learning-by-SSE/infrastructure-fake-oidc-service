@@ -48,12 +48,14 @@ public class FakeOidcServerProperties {
 
     @PostConstruct
     public void init() {
+        if(users != null) {
         for (Map.Entry<String, User> userEntry : users.entrySet()) {
             User user = userEntry.getValue();
             String login = userEntry.getKey();
             user.setLogname(login);
             user.setPreferred_username(login);
             user.setName(user.getGiven_name()+" "+user.getFamily_name());
+            }
         }
     }
 }

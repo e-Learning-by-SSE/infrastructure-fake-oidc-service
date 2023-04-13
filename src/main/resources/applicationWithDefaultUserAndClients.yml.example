@@ -8,7 +8,23 @@ server:
 
 oidc:
   tokenExpirationSeconds: 36000
-
+  users:
+    perun:
+      password: "test"
+      sub: "perun1"
+      given_name: "Master"
+      family_name: "Perun"
+      email: "perun@cesnet.cz"
+    makub:
+      password: "test"
+      sub: "makub1"
+      given_name: "Martin"
+      family_name: "Kuba"
+      email: "makub@ics.muni.cz"
+  clients:
+    default:
+      id: "submission-server"
+      secret: "testKey"
       
       
 
